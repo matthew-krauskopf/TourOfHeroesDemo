@@ -10,8 +10,14 @@ import { MessageService } from './message.service';
 export class HeroService {
 
   getHeroes() : Observable<Hero[]> {
-    this.messageService.add("Hero being fetched");
     return of(HEROES);
+  }
+
+  getHero(id: number) : Observable<Hero> {
+    this.messageService.add(`Hero being fetched: id=${id}`);
+    const found = HEROES.find(hero => hero.id === id);
+    if (found === undefined) throw new TypeError("Not possible!");
+    return of(found);
   }
 
   constructor(private messageService : MessageService) { 
